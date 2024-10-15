@@ -7,14 +7,12 @@ type NewsReqDomain struct {
 
 type NewsDomain struct {
 	Status       string
-	TotalResults string
+	TotalResults int64
 	Articles     []Article
 }
 
 type Article struct {
 	Source      ArticleSourceResponse
-	Id          string
-	Name        string
 	Author      string
 	Title       string
 	Description string

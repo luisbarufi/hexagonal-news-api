@@ -2,14 +2,12 @@ package response
 
 type NewsClientResponse struct {
 	Status       string
-	TotalResults string
+	TotalResults int64
 	Articles     []ArticleResponse
 }
 
 type ArticleResponse struct {
 	Source      ArticleSourceResponse
-	Id          string
-	Name        string
 	Author      string
 	Title       string
 	Description string
