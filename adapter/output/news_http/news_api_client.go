@@ -1,6 +1,7 @@
 package news_http
 
 import (
+	"fmt"
 	"hexagonal-news-api/adapter/output/model/response"
 	"hexagonal-news-api/application/domain"
 	"hexagonal-news-api/configuration/env"
@@ -26,7 +27,7 @@ func (nc *newsClient) GetNewsPort(
 
 	newsResponse := &response.NewsClientResponse{}
 
-	_, err := client.R().
+	res, err := client.R().
 		SetQueryParams(map[string]string{
 			"q":      newsDomain.Subject,
 			"from":   newsDomain.From,
@@ -35,8 +36,9 @@ func (nc *newsClient) GetNewsPort(
 		SetResult(newsResponse).
 		Get("/everything")
 
-	if err != nil {
-		return nil, rest_err.NewInternalServerError("Error trying to call NewsAPI with params")
+	if err != nil || res.IsError() {
+		return nil, rest_err.NewInternalServerError(
+			fmt.Sprintf("Error trying to call NewsAPI with params, error=%v", res.Error()))
 	}
 
 	NewsResponseDomain := &domain.NewsDomain{}
