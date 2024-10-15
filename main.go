@@ -5,9 +5,11 @@ import (
 	"hexagonal-news-api/configuration/logger"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
+	godotenv.Load()
 	logger.Info("About to start application")
 	router := gin.Default()
 
@@ -15,5 +17,6 @@ func main() {
 
 	if err := router.Run(":3333"); err != nil {
 		logger.Error("Error trying to init application on port 3333", err)
+		return
 	}
 }
